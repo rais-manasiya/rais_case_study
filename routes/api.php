@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,9 +27,8 @@ Route::post('/auth/login', [App\Http\Controllers\API\AuthController::class, 'log
 
 //Protecting Routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::get('/profile', function(Request $request) {
-        return auth()->user();
-    });
+    
+    Route::resource('products', ProductController::class);
 
     // API route for logout user
     Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
