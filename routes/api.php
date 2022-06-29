@@ -18,8 +18,12 @@ use App\Http\Controllers\CartController;
 
 //API route for register new user
 Route::post('/register', [App\Http\Controllers\API\AuthController::class, 'register']);
+
+// Rate-limit assigned to 3 attempt per minute 
+Route::middleware(['throttle:api'])->group(function () {
 //API route for login user
 Route::post('/auth/login', [App\Http\Controllers\API\AuthController::class, 'login']);
+});
 
 //Protecting Routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
@@ -32,3 +36,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 //API routes for product CRUD
 Route::resource('products', ProductController::class);
+Route::middleware('throttle:60,1')->get('/user', function () {
+    //
+});
