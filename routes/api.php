@@ -16,10 +16,6 @@ use App\Http\Controllers\CartController;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
 //API route for register new user
 Route::post('/register', [App\Http\Controllers\API\AuthController::class, 'register']);
 //API route for login user
@@ -27,9 +23,12 @@ Route::post('/auth/login', [App\Http\Controllers\API\AuthController::class, 'log
 
 //Protecting Routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    
-    Route::resource('products', ProductController::class);
+    //API routes for cart CRUD
+    Route::resource('cart', CartController::class);
 
     // API route for logout user
     Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
 });
+
+//API routes for product CRUD
+Route::resource('products', ProductController::class);
