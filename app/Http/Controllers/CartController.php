@@ -16,7 +16,9 @@ class CartController extends Controller
      */
     public function index()
     {
-        $products = Cart::all();
+        $products = Cart::join('products', 'products.id', '=', 'cart.product_id')
+              		->get(['products.name', 'cart.qty','products.price','products.avatar']);
+            
         return response()->json([
             "success" => true,
             "message" => "Products in cart",
